@@ -4,9 +4,9 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Row } from 'react-bootstrap'
 
-const index = (props) => {
+const top = (props) => {
     return (
-        <Pagina titulo="Filmes Populares">
+        <Pagina titulo="Filmes Top Rated">
 
             <Row md={4}>
                 {props.filmes.map(item => (
@@ -28,11 +28,11 @@ const index = (props) => {
     )
 }
 
-export default index
+export default top
 
 export async function getServerSideProps(context) {
 
-    const resultado = await apiFilmes.get('/movie/popular?language=pt-BR')
+    const resultado = await apiFilmes.get('/movie/top_rated?language=pt-BR')
     const filmes = resultado.data.results
 
     return {

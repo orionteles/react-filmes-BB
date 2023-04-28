@@ -1,4 +1,3 @@
-import Galeria from '@/components/Galeria'
 import Pagina from '@/components/Pagina'
 import apiFilmes from '@/services/apiFilmes'
 import Link from 'next/link'
@@ -32,7 +31,16 @@ const Detalhes = ({ filme, atores }) => {
                 </Col>
             </Row>
 
-            <Galeria titulo="Atores" lista={atores} foto="profile_path" link="/atores/" />
+            <h2>Atores</h2>
+            <Row>
+                {atores.map(item => (
+                    <Col className='mb-3' md={2} title={item.name}>
+                        <Link href={'/atores/' + item.id}>
+                            <Card.Img variant="top" src={"https://image.tmdb.org/t/p/w500" + item.profile_path} />
+                        </Link>
+                    </Col>
+                ))}
+            </Row>
 
 
         </Pagina>
@@ -45,10 +53,10 @@ export async function getServerSideProps(context) {
 
     const id = context.params.id
 
-    const resultado = await apiFilmes.get('/movie/' + id + '?language=pt-BR')
+    const resultado = await apiFilmes.get('/tv/' + id + '?language=pt-BR')
     const filme = resultado.data
 
-    const resAtores = await apiFilmes.get('/movie/' + id + '/credits?language=pt-BR')
+    const resAtores = await apiFilmes.get('/tv/' + id + '/credits?language=pt-BR')
     const atores = resAtores.data.cast
 
     return {
